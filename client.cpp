@@ -39,7 +39,8 @@ int main(){
     else {
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
     }
-
+    Sleep(3000);
+    system("cls");
     cout<<"Enter a message (TYPE \"exit\" to quit): \n";
     while(1)
     {

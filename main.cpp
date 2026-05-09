@@ -53,7 +53,8 @@ int server(){
 	else {
 		cout << "A friend has connected! Reference ID: " << acceptsock <<endl;
 	}
-	cout<<"Messages "<<endl;
+	Sleep(3000);
+	system("cls");
 	cout<<"Enter a message (SEND \"exit\" to quit):\n ";
     while(1)
     {
