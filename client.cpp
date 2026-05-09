@@ -37,9 +37,10 @@ int main(){
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
     }
 
-    cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE): ";
+    cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE): \n";
     while(1)
     {
+        cout<<"You : ";
         getline(cin, msg);
         send(sock, msg.c_str(), msg.length(), 0);
         msg = "";
