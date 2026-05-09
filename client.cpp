@@ -37,16 +37,22 @@ int main(){
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
     }
 
-    cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE): \n";
+    cout<<"Enter a message (TYPE \"exit\" to quit): \n";
     while(1)
     {
         cout<<"You : ";
         getline(cin, msg);
         send(sock, msg.c_str(), msg.length(), 0);
-        msg = "";
+        //msg[sizeof(msg)] = '\0';
+        if(msg == "exit"){
+            cout<<"Exiting..."<<endl;
+            break;
+        }
+        memset(buffer, 0, sizeof(buffer));
         recv(sock, buffer, sizeof(buffer), 0);
+        //buffer[sizeof(buffer)] = '\0';
         cout<<"Server : "<<buffer<<endl;
-        buffer[0] = '\0';
+        
     }
 
     
