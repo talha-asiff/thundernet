@@ -51,16 +51,21 @@ int server(){
 		cout << "A friend has connected! Reference ID: " << acceptsock << std::endl;
 	}
 	cout<<"Messages "<<endl;
-	cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE):\n ";
+	cout<<"Enter a message (SEND \"exit\" to quit):\n ";
     while(1)
     {
-		 recv(acceptsock, buffer, sizeof(buffer), 0);
+		 memset(buffer, 0, sizeof(buffer));
+		recv(acceptsock, buffer, sizeof(buffer), 0);
          cout<<"Client : "<<buffer<<endl;
 		 cout<<"You : ";
          getline(cin, msg);
 		 send(acceptsock, msg.c_str(), msg.length(), 0);
-		 msg = "";
-		 buffer[0] = '\0';
+		// msg[sizeof(msg)] = '\0';
+		 //buffer[sizeof(buffer)] = '\0';
+		 if(msg == "exit"){
+			cout<<"Exiting..."<<endl;
+			break;
+		 }
 		 
     }
 	WSACleanup();
