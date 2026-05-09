@@ -3,10 +3,13 @@
 #include <conio.h>
 #include <string>
 #include <windows.h>
+#include <fstream>
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 int server(){
 	system("cls");
+	ofstream logFile("export/server_log.html");
+	logFile << "<!DOCTYPE html><html><head><title>Server Chat Log</title><link rel=\"stylesheet\" href=\"style.css\"></head>" << endl;
 	char in;
 	string msg;
 	char buffer[1024] = {0};
@@ -48,27 +51,31 @@ int server(){
 		return 1;
 	}
 	else {
-		cout << "A friend has connected! Reference ID: " << acceptsock << std::endl;
+		cout << "A friend has connected! Reference ID: " << acceptsock <<endl;
 	}
 	cout<<"Messages "<<endl;
-	cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE):\n ";
+	cout<<"Enter a message (SEND \"exit\" to quit):\n ";
     while(1)
     {
-		 recv(acceptsock, buffer, sizeof(buffer), 0);
+		 memset(buffer, 0, sizeof(buffer));
+		recv(acceptsock, buffer, sizeof(buffer), 0);
+		 logFile << "<h2 class = \"client\"><strong>Client:</strong> " << buffer << "</h2>" <<endl;
          cout<<"Client : "<<buffer<<endl;
 		 cout<<"You : ";
          getline(cin, msg);
 		 send(acceptsock, msg.c_str(), msg.length(), 0);
-		 msg = "";
-		 buffer[0] = '\0';
-		 
+		 if(msg == "exit"){
+			cout<<"Exiting..."<<endl;
+			break;
+		 }
+		 logFile << "<h2 class = \"server\"><strong>Server:</strong> " << msg << "</h2>" << endl;
     }
+	logFile.close();
 	WSACleanup();
 	_getch();
 	return 0;
 }
 
-using namespace std;
 int main(){
 	server();
 }

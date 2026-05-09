@@ -1,0 +1,8 @@
+h2.server{
+    background-color: brown;
+    color: white;
+}
+h2.client{
+    background-color: rgb(255, 128, 0);
+    color: rgb(30, 3, 3);
+}

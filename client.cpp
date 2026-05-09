@@ -2,9 +2,12 @@
 #include <string>
 #include <winsock2.h>
 #include <conio.h>
+#include <fstream>
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 int main(){
+    ofstream logFile("export/client_log.html");
+	logFile << "<!DOCTYPE html><html><head><title>Client Chat Log</title><link rel=\"stylesheet\" href=\"style.css\"></head>" << endl;
     string msg;
     char in;
     char buffer[1024] = {0};
@@ -37,19 +40,26 @@ int main(){
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
     }
 
-    cout<<"Enter a message (ENTER 0 TO SEND A NEW MESSAGE): \n";
+    cout<<"Enter a message (TYPE \"exit\" to quit): \n";
     while(1)
     {
+        
         cout<<"You : ";
         getline(cin, msg);
         send(sock, msg.c_str(), msg.length(), 0);
-        msg = "";
+        if(msg == "exit"){
+            cout<<"Exiting..."<<endl;
+            break;
+        }
+        logFile << "<h2 class = \"client\"><strong>client:</strong> " << msg << "</h2>" << endl;
+        memset(buffer, 0, sizeof(buffer));
         recv(sock, buffer, sizeof(buffer), 0);
+        logFile << "<h2 class = \"server\"><strong>server:</strong> " << buffer << "</h2>" << endl;
         cout<<"Server : "<<buffer<<endl;
-        buffer[0] = '\0';
+        
     }
 
-    
+    logFile.close();
     closesocket(sock);
     WSACleanup();
     _getch();

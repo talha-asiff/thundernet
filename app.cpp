@@ -8,12 +8,12 @@
 using namespace std;
 int server(){
     system("cls");
-    system("g++ -o main  main.cpp -lws2_32");
+    system("g++ -o main  ..\\main.cpp -lws2_32");
     system("start ..\\main.exe");
 }
 int client(){
     system("cls");
-    system("g++ -o client  client.cpp -lws2_32");
+    system("g++ -o client  ..\\client.cpp -lws2_32");
     system("start ..\\client.exe");
 }
 int about(){
