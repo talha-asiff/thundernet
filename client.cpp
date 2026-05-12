@@ -3,9 +3,15 @@
 #include <winsock2.h>
 #include <conio.h>
 #include <fstream>
+#include <windows.h>
+#include <ctime>
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 int main(){
+    time_t now = time(0);
+    time(&now);
+    string start = "";
+    string stop = "";
     ofstream logFile("export/client_log.html");
 	logFile << "<!DOCTYPE html><html><head><title>Client Chat Log</title><link rel=\"stylesheet\" href=\"style.css\"></head>" << endl;
     string msg;
@@ -38,6 +44,8 @@ int main(){
     }
     else {
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
+        start = ctime(&now);
+        logFile << "<h1 style = \"background-color: blue; color:white;\">Chat started at: " << start << "</h1><br>" << endl;
     }
     system("cls");
     cout<<"Enter a message (TYPE \"exit\" to quit): \n";
@@ -49,6 +57,9 @@ int main(){
         send(sock, msg.c_str(), msg.length(), 0);
         if(msg == "exit"){
             cout<<"Exiting..."<<endl;
+            Sleep(2000);
+            stop = ctime(&now);
+            logFile << "<h1 style = \"background-color: blue; color:white;\">Chat ended at: " << stop << "</h1><br>" << endl; 
             break;
         }
         logFile << "<h2 class = \"client\"><strong>client:</strong> " << msg << "</h2>" << endl;
@@ -62,6 +73,12 @@ int main(){
     logFile.close();
     closesocket(sock);
     WSACleanup();
+    system("cls");
+    cout<<"Disconnected from server."<<endl;
+    cout<<"Chat log saved to export/client_log.html"<<endl;
+    cout<<"connection started at : "<<start<<endl;
+    cout<<"connection ended at : "<<stop<<endl;
+    cout<<"Press any key to exit..."<<endl;
     _getch();
     return 0;
 }
