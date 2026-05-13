@@ -51,13 +51,13 @@ int main(){
     cout<<"Enter a message (TYPE \"exit\" to quit): \n";
     while(1)
     {
-        
         cout<<"You : ";
         getline(cin, msg);
         send(sock, msg.c_str(), msg.length(), 0);
         if(msg == "exit"){
             cout<<"Exiting..."<<endl;
             Sleep(2000);
+            time(&now);
             stop = ctime(&now);
             logFile << "<h1 style = \"background-color: blue; color:white;\">Chat ended at: " << stop << "</h1><br>" << endl; 
             break;
