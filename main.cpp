@@ -5,11 +5,10 @@
 #include <windows.h>
 #include <fstream>
 #include <ctime>
-#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "ws2_32.lib") 
 using namespace std;
 int server(){
 	time_t now = time(0);
-	time(&now);
 	string start = "";
 	string stop = "";
 	system("cls");
@@ -58,6 +57,7 @@ int server(){
 	else {
 		cout << "A friend has connected! Reference ID: " << acceptsock <<endl;
 	}
+	time(&now);
 	start = ctime(&now);
 	logFile << "<h1 style = \"background-color: blue; color:white;\">Chat started at: " << start << "</h1><br>" << endl;
 	Sleep(3000);
@@ -74,6 +74,7 @@ int server(){
 		 send(acceptsock, msg.c_str(), msg.length(), 0);
 		 if(msg == "exit"){
 			cout<<"Exiting..."<<endl;
+			time(&now);
 			stop = ctime(&now);
 			logFile << "<h1 style = \"background-color: blue; color:white;\">Chat ended at: " << stop << "</h1><br>" << endl;	
 			break;
