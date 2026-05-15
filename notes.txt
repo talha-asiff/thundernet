@@ -1,0 +1,15 @@
+server :
+get winsock info -> create connection soxket -> give server an address (e.g. 127.0.0.1:5555) -> bind -> accepting socket -> listen for message -> send/recv
+
+client:
+get winsock info -> create accepting socket -> hardcode server address -> connect -> send/recv
+
+
+Types of Socket:
+1. Datagram Sockets: Datagram sockets allow processes to use the User Datagram Protocol (UDP). It is a two-way flow of communication or messages. It can receive messages in a different order from the sending way and also can receive duplicate messages. These sockets are preserved with their boundaries. The socket type of datagram socket is SOCK_DGRAM.
+
+2. Stream Sockets: Stream socket allows processes to use the Transfer Control Protocol (TCP) for communication. A stream socket provides a sequenced, constant or reliable, and two-way (bidirectional) flow of data. After the establishment of connection, data can be read and written to these sockets in a byte stream. The socket type of stream socket is SOCK_STREAM.
+
+3. Raw Sockets: Raw Socket provide user access to the Internet Control Message Protocol (ICMP). Raw sockets are not used for most applications. These sockets are the same as the datagram oriented, their characteristics are dependent on the interfaces. They provided support in developing new communication protocols or for access to more facilities of an existing protocol. Only the superusers can access the Raw Sockets. The socket type of Raw Socket is SOCK_RAW.
+
+4. Sequenced Packet Sockets: Sequenced Packet Sockets are similar to the stream socket, with the exception that record boundaries are preserved in-stream sockets. The given interface in this section is of Network System ( NS) that has an abstraction of Sockets and is ordered in all the applications. The Sequenced Packet Sockets enable the user to multiply the sequence packet protocol or some IDP (Internet Datagram Protocol) which heads on the packet or a packet group by writing in the header of the prototype along with the data that has been sent. The socket type of Sequenced Packet Socket is SOCK_SEQPACKET.
