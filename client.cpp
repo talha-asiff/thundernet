@@ -7,9 +7,34 @@
 #include <ctime>
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
+struct connectionInfo {
+	SOCKET acceptid;
+	string ipAddress;
+	int port;
+};
+string clientStart(){
+	time_t now = time(0);
+	time(&now);
+	string start = ctime(&now);
+	return start;
+}
+string clientStop(){
+	time_t now = time(0);
+	time(&now);
+	string stop = ctime(&now);
+	return stop;
+}
+bool serverexit(char *buffer){
+    if(strcmp(buffer, "exit") == 0){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 int main(){
-    time_t now = time(0);
-    time(&now);
+    char exitin;
     string start = "";
     string stop = "";
     ofstream logFile("export/client_log.html");
@@ -44,7 +69,7 @@ int main(){
     }
     else {
         cout << "Connected to the server! Reference ID: " << sock << std::endl;
-        start = ctime(&now);
+        start = clientStart();
         logFile << "<h1 style = \"background-color: blue; color:white;\">Chat started at: " << start << "</h1><br>" << endl;
     }
     system("cls");
@@ -57,8 +82,7 @@ int main(){
         if(msg == "exit"){
             cout<<"Exiting..."<<endl;
             Sleep(2000);
-            time(&now);
-            stop = ctime(&now);
+            stop = clientStop();
             logFile << "<h1 style = \"background-color: blue; color:white;\">Chat ended at: " << stop << "</h1><br>" << endl; 
             break;
         }
@@ -67,6 +91,9 @@ int main(){
         recv(sock, buffer, sizeof(buffer), 0);
         logFile << "<h2 class = \"server\"><strong>server:</strong> " << buffer << "</h2>" << endl;
         cout<<"Server : "<<buffer<<endl;
+        if(serverexit(buffer)){
+            cout<<"NOTICE : Server has disconnected."<<endl;
+        }
         
     }
 
@@ -78,7 +105,20 @@ int main(){
     cout<<"Chat log saved to export/client_log.html"<<endl;
     cout<<"connection started at : "<<start<<endl;
     cout<<"connection ended at : "<<stop<<endl;
-    cout<<"Press any key to exit..."<<endl;
-    _getch();
+    cout<<"Press 0 to get connection info, Press any key to exit..."<<endl;
+    exitin = _getch();
+    if(exitin == '0'){
+        connectionInfo info;
+        info.acceptid = sock;
+        info.ipAddress = "Localhost LAN";
+        info.port = 5555;
+        cout<<"Connection Info:\n";
+        cout<<"Mode : TCP\n Computer Type : Client\n Data mode : Stream\n";
+        cout<<"Accepting Socket Reference ID: "<<info.acceptid<<endl;
+        cout<<"Live at: "<<info.ipAddress<<endl;
+        cout<<"Port: "<<info.port<<endl;
+        cout<<"Press any key to exit..."<<endl;
+        _getch();
+    }
     return 0;
 }
