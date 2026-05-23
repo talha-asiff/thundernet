@@ -3,7 +3,7 @@
 CORE CONCEPT : C++ Socket Programming - TCP/IP Windows socket (winsock2)
 -----------------------------------------------------------------------------------------
 
-# <img src="https://i.ibb.co/H6rMGnb/image-removebg-preview-1.png" width="45" height="45"> Project details:
+# <img src="https://i.ibb.co/H6rMGnb/image-removebg-preview-1.png" width="45" height="45" style="border-radius:360px;"> Project details:
 1st semester programming fundamentals final project.  
 ID : CIIT/SP26-BSE-064/LHR .  
 COMSATS lahore.  
